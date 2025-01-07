@@ -5,6 +5,8 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import authSevices from './appwrite/auth.js'
 import { login,logout } from './store/authSlice.js'
+import { Header, Footer } from './components'
+import { Outlet } from 'react-router-dom'
 
 function App() {
 
@@ -20,7 +22,7 @@ function App() {
         dispatch(logout())
       } 
     })
-    .finally(() => setLoading(fasle)) 
+    .finally(() => setLoading(false)) 
   },[])
 
   return !loading ? (
