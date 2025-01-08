@@ -12,7 +12,6 @@ export default function Protected({children, authentication = true}) {
         
 
         
-        console.log("authStatus", authStatus);
         
 
         if(authentication && authStatus !== authentication){
