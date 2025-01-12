@@ -1,5 +1,12 @@
 import conf from '../config/conf.js';
-import { Client, ID, Databases, Storage, Query } from "appwrite";
+import { Client, ID, Databases, Permission,Storage,Role, Query } from "appwrite";
+
+const permissions = [
+    // Grant authenticated users create and update permissions
+    Permission.write(Role.users()),  // Allow authenticated users to create
+    Permission.read(Role.users()),    // Allow authenticated users to read
+    Permission.update(Role.users())   // Allow authenticated users to update
+]
 
 export class Service{
     client = new Client();
@@ -7,8 +14,6 @@ export class Service{
     bucket;
      
     constructor(){
-        console.log("conf.appwriteUrl", conf.appwriteUrl);
-        
         this.client
         .setEndpoint(conf.appwriteUrl)
         .setProject(conf.appwriteProjectId);
@@ -16,7 +21,7 @@ export class Service{
         this.bucket = new Storage(this.client);
     }
 
-    async createPost({title, slug, content, featuredImage, status, userId}){
+      async createPost({title, slug, content, featuredImage, status, userId}){
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
@@ -60,7 +65,6 @@ export class Service{
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug
-            
             )
             return true
         } catch (error) {
@@ -69,17 +73,16 @@ export class Service{
         }
     }
 
-    async getPost(slug){
+    async getPost(slug) {
         try {
             return await this.databases.getDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug
-            
-            )
+            );
         } catch (error) {
-            console.log("Appwrite serive :: getPost :: error", error);
-            return false
+            console.log("Appwrite service :: getPost :: error", error);
+            return false;
         }
     }
 
@@ -88,12 +91,9 @@ export class Service{
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                queries,
-                
-
+                queries
             )
         } catch (error) {
-            console.log("Appwrite serive :: getPosts :: error", error);
             return false
         }
     }
