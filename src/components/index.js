@@ -3,7 +3,7 @@ import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import Signup from "./Signup";
 import Login from "./Login";
-import LogoutBtn from "./Header/LogoutBtn";
+import LogoutBtn from "./Header/LogOutBtn";
 import RTE from "./RTE";
 import PostCard from "./PostCard";
 import Container from "./container/Container";
